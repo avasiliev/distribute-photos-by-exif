@@ -62,7 +62,6 @@ def distribute(source_path, destination_path):
             directory = _create_directory_for_date(destination_path, exif_datetime.date())
             datetime_file_name = '{}.jpg'.format(exif_datetime.isoformat())
             _make_hardlink(file_path, Path(directory, datetime_file_name))
-            raise Exception('Enough')
 
 
 def main():
