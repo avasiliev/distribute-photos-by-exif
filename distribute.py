@@ -63,7 +63,7 @@ def distribute(source_path, destination_path):
                 log.warning(f'No datetime found for {file_path!s}')
                 continue
             datetime_directory = _create_directory_for_date(destination_path, exif_datetime.date())
-            datetime_file_name = '{}.jpg'.format(exif_datetime.isoformat())
+            datetime_file_name = '{}_{}.jpg'.format(exif_datetime.isoformat(), file_name)
             _make_hardlink(file_path, Path(datetime_directory, datetime_file_name))
 
 
