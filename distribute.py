@@ -14,7 +14,10 @@ log = logging.getLogger(__name__)
 
 def _get_exif_date(image_path):
     with open(image_path, 'rb') as image_file:
-        tags = exifread.process_file(image_file)
+        try:
+            tags = exifread.process_file(image_file)
+        except:
+            return None
     datetime_string = tags.get('EXIF DateTimeOriginal') or tags.get('Image DateTime')
     if not datetime_string:
         return None
