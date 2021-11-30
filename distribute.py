@@ -27,7 +27,7 @@ def _get_exif_date(image_path):
 
 
 def _create_directory_for_date(destination_path, date):
-    directory = Path(destination_path, f'{date.year}', f'{date.month:02d}')
+    directory = Path(destination_path, f'{date.year}', f'{date.year}-{date.month:02d}')
     Path(directory).mkdir(parents=True, exist_ok=True)
     return directory
 
@@ -35,7 +35,7 @@ def _create_directory_for_date(destination_path, date):
 def _make_hardlink(source_path, destination_path):
     log.info(f'{source_path!s} <- {destination_path!s}')
     try:
-        destination_path.symlink_to(source_path)
+        destination_path.symlink_to(os.path.relpath(source_path, destination_path.parent))
     except FileExistsError:
         log.warning(f'{destination_path!s} already exists')
 
