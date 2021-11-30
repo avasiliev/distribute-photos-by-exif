@@ -34,7 +34,10 @@ def _create_directory_for_date(destination_path, date):
 
 def _make_hardlink(source_path, destination_path):
     log.info(f'{source_path!s} <- {destination_path!s}')
-    destination_path.symlink_to(source_path)
+    try:
+        destination_path.symlink_to(os.path.relpath(source_path, destination_path))
+    except FileExistsError:
+        log.warning(f'{destination_path!s} already exists')
 
 
 def distribute(source_path, destination_path):
